@@ -1,2 +1,1 @@
-# tep-ecommerce
-Ecommerce
+# TEP

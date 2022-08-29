@@ -1,0 +1,9 @@
+{
+  "name": "@tep/db",
+  "version": "0.0.1",
+  "main": "./models/index.js",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {}
+}

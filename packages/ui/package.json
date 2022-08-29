@@ -1,0 +1,9 @@
+{
+  "name": "@tep/ui",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
