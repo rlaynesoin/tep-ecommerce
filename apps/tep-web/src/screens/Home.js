@@ -1,26 +1,48 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useState, useEffect } from 'react'
+
+import { client } from '../utils/sanityClient'
 
 import FooterBanner from '../components/Home/FooterBanner'
-import HeroBanner from '../components/Home/HeroBanner'
 import Product from '../components/Home/Product'
-
-import productList from '../assets/products.json'
+import DemoCarousel from '../components/Carousel'
 
 const Home = () => {
+  const [products, setProducts] = useState()
+
+  useEffect(() => {
+    getServerSideProps()
+  }, [])
+
+  const getServerSideProps = async () => {
+    const query = '*[_type == "product"]'
+    const xproducts = await client.fetch(query)
+
+    setProducts(xproducts)
+  }
+
   return (
     <div css={styles}>
-      <HeroBanner />
-
+      <div className="divCarousel">
+        <DemoCarousel autoPlay />
+      </div>
       <div className="products-heading">
-        <h2>Best Seller Products</h2>
-        <p>speaker There are many variations passages</p>
+        <h2>Nuevos articulos</h2>
+        <p>Te mostramos los últimos articulos ingresados.</p>
       </div>
 
       <div className="products-container">
-        {productList?.map(product => (
-          <Product key={product.id} product={product} />
-        ))}
+        {products?.map(
+          (product, index) =>
+            // eslint-disable-next-line no-underscore-dangle
+            index < 10 && <Product key={product._id} product={product} />
+        )}
+      </div>
+
+      <div className="products-heading">
+        <h2>Departamentos</h2>
+        <p>Listado de los diferentes departamentos</p>
       </div>
 
       <FooterBanner />
@@ -41,6 +63,12 @@ const styles = css`
   .products-heading p {
     font-size: 16px;
     font-weight: 200;
+  }
+  .divCarousel {
+    img {
+      border-radius: 20px;
+      height: 400px;
+    }
   }
   .products-container {
     display: flex;

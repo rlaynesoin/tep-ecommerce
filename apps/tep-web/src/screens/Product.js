@@ -1,45 +1,50 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import {
-  AiOutlineMinus,
-  AiOutlinePlus,
+  // AiOutlineMinus,
+  // AiOutlinePlus,
   AiFillStar,
   AiOutlineStar,
 } from 'react-icons/ai'
 
-import earphones from '../assets/img/headphones_c_1.webp'
-import earphones2 from '../assets/img/headphones_c_2.webp'
-import earphones3 from '../assets/img/headphones_c_3.webp'
-
-import productList from '../assets/products.json'
+import { client, urlFor } from '../utils/sanityClient'
 
 const Product = () => {
+  const [product, setProduct] = useState([])
   const [index, setIndex] = useState(0)
-
   const { id } = useParams()
 
-  const product = productList[id]
+  useEffect(() => {
+    getProduct()
+  }, [id])
 
-  const array = [earphones, earphones2, earphones3]
+  const getProduct = async () => {
+    const query = `*[_type == "product" && status == true && _id == "${id}"]`
+    const result = await client.fetch(query)
+    setProduct(result[0])
+  }
 
   return (
     <div css={styles}>
       <div>
-        <div className="image-container">
-          <img
-            src={earphones}
-            className="product-detail-image"
-            alt="img_product"
-          />
-        </div>
+        {product?.image && (
+          <div className="image-container">
+            <img
+              src={urlFor(product?.image && product?.image[index])}
+              className="product-detail-image"
+              alt="img_product"
+            />
+          </div>
+        )}
+
         <div className="small-images-container">
-          {array?.map((item, i) => (
+          {product?.image?.map((item, i) => (
             <img
               // eslint-disable-next-line react/no-array-index-key
               key={i}
-              src={item}
+              src={urlFor(item)}
               className={
                 i === index ? 'small-image selected-image' : 'small-image'
               }
@@ -51,7 +56,7 @@ const Product = () => {
       </div>
 
       <div className="product-detail-desc">
-        <h1>{product.name}</h1>
+        <h1>{product?.name}</h1>
         <div className="reviews">
           <div>
             <AiFillStar />
@@ -63,9 +68,16 @@ const Product = () => {
           <p>(20)</p>
         </div>
         <h4>Details: </h4>
-        <p>Hola</p>
-        <p className="price">${product.price}</p>
-        <div className="quantity">
+        <p>{product?.details}</p>
+        {product?.ofter ? (
+          <div className="div-ofter">
+            <p className="old-price">${product?.price}</p>
+            <p className="ofter-price">${product?.priceofter}</p>
+          </div>
+        ) : (
+          <p className="price">${product?.price}</p>
+        )}
+        {/* <div className="quantity">
           <h3>Quantity:</h3>
           <p className="quantity-desc">
             <span className="minus">
@@ -76,14 +88,14 @@ const Product = () => {
               <AiOutlinePlus />
             </span>
           </p>
-        </div>
+        </div> */}
         <div className="buttons">
           <button type="button" className="add-to-cart">
             Add to Cart
           </button>
-          <button type="button" className="buy-now">
+          {/* <button type="button" className="buy-now">
             Buy Now
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
@@ -122,6 +134,7 @@ const styles = css`
     width: 70px;
     height: 70px;
     cursor: pointer;
+    padding: 5px;
   }
 
   .selected-image {
@@ -164,6 +177,22 @@ const styles = css`
   .price .old-price {
     color: gray;
     text-decoration: line-through;
+  }
+
+  .div-ofter {
+    display: flex;
+    margin-top: 10px;
+
+    .old-price {
+      text-decoration: line-through;
+      margin-top: 14px;
+    }
+    .ofter-price {
+      margin-left: 10px;
+      font-weight: 800;
+      color: red;
+      font-size: 20px;
+    }
   }
 
   .quantity-desc {

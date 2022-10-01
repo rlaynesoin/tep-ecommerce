@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
         <Header />
       </header>
       <main className="main-container">{children}</main>
-      <footer>
+      <footer className="footer-container">
         <Footer />
       </footer>
     </div>
@@ -27,6 +27,9 @@ const styles = css`
     max-width: 1400px;
     margin: auto;
     width: 100%;
+  }
+  .footer-container {
+    margin-top: 30px;
   }
 `
 

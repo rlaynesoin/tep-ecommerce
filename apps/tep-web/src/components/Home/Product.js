@@ -2,22 +2,30 @@
 import { css } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
-import productImg from '../../assets/img/TEP/nike_mercurial.jpg'
+import { urlFor } from '../../utils/sanityClient'
 
-const Product = ({ product: { name, id, price } }) => {
+const Product = ({
+  product: { image, name, _id, price, ofter, priceofter },
+}) => {
   return (
     <div css={style}>
-      <Link to={`/product/${id}`}>
+      <Link to={`/product/${_id}`} relative="path">
         <div className="product-card">
           <img
-            src={productImg}
-            width={250}
-            height={250}
+            src={urlFor(image && image[0])}
+            width={200}
+            height={200}
             className="product-image"
             alt="img"
           />
           <p className="product-name">{name}</p>
-          <p className="product-price">${price}</p>
+          {ofter ? (
+            <p className="product-price">
+              <span>${price}</span> - ${priceofter}
+            </p>
+          ) : (
+            <p className="product-price">${price}</p>
+          )}
         </div>
       </Link>
     </div>
@@ -29,6 +37,9 @@ const style = css`
     cursor: pointer;
     transform: scale(1, 1);
     transition: transform 0.5s ease;
+    border: solid 2px #f2f1f0;
+    border-radius: 15px;
+    padding: 5px;
     color: #324d67;
   }
   .product-card:hover {
@@ -48,6 +59,12 @@ const style = css`
     font-weight: 800;
     margin-top: 6px;
     color: black;
+
+    span {
+      color: red;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
   }
 `
 
