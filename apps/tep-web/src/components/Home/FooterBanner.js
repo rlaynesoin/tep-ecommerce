@@ -1,120 +1,85 @@
+/* eslint-disable no-underscore-dangle */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Grid } from '@mui/material'
 
-import earphones from '../../assets/img/headphones_c_1.webp'
+import { client, urlFor } from '../../utils/sanityClient'
 
 const FooterBanner = () => {
-  return (
-    <div css={styles} className="footer-banner-container">
-      <div className="banner-desc">
-        <div className="left">
-          <p>Hola Mundo</p>
-          <h3>Como</h3>
-          <h3>Estas?</h3>
-          <p>bien</p>
-        </div>
+  const [types, setTypes] = useState([])
 
-        <div className="right">
-          <p>Hola</p>
-          <h3>Hola</h3>
-          <p>Hola</p>
-          <Link to="/product/">
-            <button type="button">Hola</button>
-          </Link>
-        </div>
-        <img src={earphones} alt="img" className="footer-banner-image" />
-      </div>
+  useEffect(() => {
+    getTypes()
+  }, [])
+
+  const getTypes = async () => {
+    const query = `*[_type == "types"]`
+    const result = await client.fetch(query)
+    setTypes(result)
+  }
+  return (
+    <div css={styles}>
+      <Grid container spacing={1}>
+        {types.map(typ => (
+          <Grid key={typ._id} item md={4} sm={6} xs={12}>
+            <Link key={typ._id} to={`department/${typ._id}`}>
+              <div className="department-div">
+                <div className="title-department">
+                  <h3>{typ.name}</h3>
+                </div>
+                <img src={urlFor(typ?.image?.asset?._ref)} alt={typ.name} />
+              </div>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   )
 }
 
 const styles = css`
-  padding: 100px 40px;
-  background-color: #f02d34;
-  border-radius: 15px;
-  position: relative;
-  height: 400px;
-  line-height: 1;
-  color: white;
-  width: 100%;
-  margin-top: 120px;
+  .department-div {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    transform: scale(1, 1);
+    transition: transform 0.5s ease;
 
-  .banner-desc {
-    display: flex;
-    justify-content: space-between;
+    img {
+      border-radius: 20px;
+      width: 100%;
+      height: 100%;
+    }
   }
-  .banner-desc button {
-    border-radius: 15px;
-    padding: 10px 16px;
-    background-color: white;
-    color: red;
-    border: none;
-    margin-top: 40px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
+
+  .department-div:hover {
+    transform: scale(1.1, 1.1);
   }
-  .banner-desc .left h3 {
-    font-weight: 900;
-    font-size: 80px;
-    margin-left: 25px;
-  }
-  .banner-desc .left p {
-    margin: 18px;
-  }
-  .footer-banner-image {
+
+  .title-department {
     position: absolute;
-    top: -25%;
-    left: 25%;
-  }
-  .banner-desc .right {
-    line-height: 1.4;
-  }
-  .banner-desc .right h3 {
-    font-weight: 800;
-    font-size: 60px;
-  }
-  .banner-desc .right p {
-    font-size: 18px;
-  }
-  .banner-desc .right .company-desc {
-    font-size: 14px;
-    font-weight: 300;
+    width: 100%;
+    height: 60px;
+    top: 50%;
+    margin-top: -30px;
+    left: 0;
+    z-index: 100;
+    background-color: #000;
+    opacity: 0.7;
+    color: white;
+
+    h3 {
+      opacity: 1;
+      margin: 15px 0 auto 0;
+    }
   }
 
   @media screen and (max-width: 800px) {
-    height: 560px;
-    margin-top: 80px;
-
-    .banner-desc .left h3 {
-      font-weight: 900;
-      font-size: 50px;
-      margin-left: 5px;
-    }
-    .banner-desc .left p {
-      margin: 18px;
-    }
-    .banner-desc .right h3 {
-      font-size: 45px;
-    }
-    .banner-desc .right p {
-      font-size: 18px;
-    }
-    .banner-desc .right .company-desc {
-      font-size: 14px;
-    }
-    .banner-desc {
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-banner-image {
-      width: 77%;
-      left: 30%;
-      top: 6%;
-      height: 56%;
-    }
   }
 `
 

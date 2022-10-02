@@ -1,10 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { AiOutlineShopping } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 
 import TEP from '../assets/img/TEP_NB.png'
+import { useStateContext } from '../utils/useStateContext'
+import Cart from './Cart/Cart'
+import Menu from './Menu'
 
 const Navbar = () => {
+  const { showCart, setShowCart, totalQuantities } = useStateContext()
+
   return (
     <div css={styles}>
       <nav className="navbar2">
@@ -26,6 +32,7 @@ const Navbar = () => {
             <img className="img-logo" src={TEP} alt="logo" />
             <span>TEP</span>
           </Link>
+          <Menu />
         </div>
         <ul className="nav-links">
           <div className="menu">
@@ -33,13 +40,22 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/brands">Brands</Link>
+              <Link to="/brands">Marcas</Link>
             </li>
             <li>
-              <Link to="/starup">Starups</Link>
+              <Link to="/starup">Empredimiento</Link>
             </li>
           </div>
         </ul>
+        <button
+          type="button"
+          className="cart-icon"
+          onClick={() => setShowCart(true)}
+        >
+          <AiOutlineShopping />
+          <span className="cart-item-qty">{totalQuantities}</span>
+        </button>
+        {showCart && <Cart />}
       </nav>
     </div>
   )
@@ -83,6 +99,7 @@ const styles = css`
   /* LOGO */
   .logo {
     font-size: 32px;
+    display: flex;
   }
   .img-logo {
     width: 50px;
@@ -92,7 +109,7 @@ const styles = css`
 
   /* NAVBAR MENU */
   .menu {
-    display: flex;
+    display: none;
     gap: 1em;
     font-size: 18px;
   }
@@ -111,7 +128,7 @@ const styles = css`
   }
 
   .menu2 {
-    display: flex;
+    display: none;
     gap: 1em;
     font-size: 14px;
   }
@@ -120,6 +137,82 @@ const styles = css`
   }
   .menu2 li {
     padding: 5px 0px;
+  }
+
+  // Dropdown styles
+
+  .dropdown {
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+
+    button {
+      border: none;
+      background-color: transparent;
+
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    width: 300px;
+    overflow: auto;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+    z-index: 20000 !important;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown-content a {
+    display: block;
+    color: #000000;
+    padding: 5px;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    color: #ffffff;
+    background-color: #0b2b40;
+  }
+
+  // CART - SHOP
+  .cart-icon {
+    font-size: 25px;
+    color: #0b2b40;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.4s ease;
+    border: none;
+    background-color: transparent;
+  }
+  .cart-icon:hover {
+    transform: scale(1.1, 1.1);
+  }
+  .cart-item-qty {
+    position: absolute;
+    right: -8px;
+    font-size: 12px;
+    color: #eee;
+    background-color: #f02d34;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  @media (min-width: 650px) {
+    .menu {
+      display: flex;
+    }
+    .menu2 {
+      display: flex;
+    }
   }
 `
 

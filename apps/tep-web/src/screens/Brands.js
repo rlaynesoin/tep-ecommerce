@@ -1,16 +1,29 @@
+/* eslint-disable no-underscore-dangle */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Grid } from '@mui/material'
 
-import TEP from '../assets/img/TEP_NB.png'
-import Kliniu from '../assets/img/kliniu logo.png'
-import Saeta from '../assets/img/Logo_SAETA.png'
-import MundoFutsal from '../assets/img/Mundo Futsal.png'
-import Ritter from '../assets/img/ritter-sport.png'
-import GravityPro from '../assets/img/GravityPro_Logo.png'
+import { urlFor } from '../utils/sanityClient'
+import getCustomBrands from '../utils/useBrands'
 
 const Brands = () => {
-  const array = [TEP, Kliniu, Saeta, MundoFutsal, Ritter, GravityPro]
+  const [brands, setbrands] = useState([])
+
+  useEffect(() => {
+    getBrands()
+  }, [])
+
+  const getBrands = async () => {
+    const data = {
+      status: true,
+      asc: true,
+    }
+    const result = await getCustomBrands(data)
+    setbrands(result)
+  }
+
   return (
     <div css={styles}>
       <h2>Nuestras marcas</h2>
@@ -18,47 +31,39 @@ const Brands = () => {
         En este apartado te mostramos nuestro catalogo por las diferentes marcas
         que manejamos.{' '}
       </p>
-      <div className="row">
-        {array.map(brand => (
-          <div className="column">
-            <Link to="/brand">
-              <button type="button" onClick={brand}>
-                <img src={brand} alt="img" className="img-button" />
-              </button>
-            </Link>
-          </div>
-        ))}
-      </div>
+      <Grid container spacing={3} style={{ marginTop: '30px' }}>
+        {brands.length > 0 &&
+          brands.map(brand => (
+            <Grid key={brand._id} item md={4} sm={6} xs={12}>
+              <Link to={`/brands/${brand._id}`}>
+                <button type="button" className="brand-div">
+                  <img
+                    src={urlFor(brand.image)}
+                    alt="img"
+                    className="img-button"
+                  />
+                </button>
+              </Link>
+            </Grid>
+          ))}
+      </Grid>
     </div>
   )
 }
 
 const styles = css`
-  .row {
-    padding: 50px;
-  }
-  .row:after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
-  .column {
-    float: left;
-    width: 33%;
-  }
-
-  .column button {
+  .brand-div {
     background: #fff;
     border: none;
     border-radius: 20px;
-    width: 300px;
-    height: 200px;
+    width: 100%;
+    height: 250px;
+    max-height: 250px;
     margin: 2%;
     transform: scale(1, 1);
     transition: transform 0.5s ease;
   }
-  .column button:hover {
+  .brand-div:hover {
     background: #f2f2f2;
     transform: scale(1.1, 1.1);
   }
