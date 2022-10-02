@@ -1,11 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { AiOutlineShopping } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 
 import TEP from '../assets/img/TEP_NB.png'
+import { useStateContext } from '../utils/useStateContext'
+import Cart from './Cart/Cart'
 import Menu from './Menu'
 
 const Navbar = () => {
+  const { showCart, setShowCart, totalQuantities } = useStateContext()
+
   return (
     <div css={styles}>
       <nav className="navbar2">
@@ -42,6 +47,15 @@ const Navbar = () => {
             </li>
           </div>
         </ul>
+        <button
+          type="button"
+          className="cart-icon"
+          onClick={() => setShowCart(true)}
+        >
+          <AiOutlineShopping />
+          <span className="cart-item-qty">{totalQuantities}</span>
+        </button>
+        {showCart && <Cart />}
       </nav>
     </div>
   )
@@ -164,6 +178,32 @@ const styles = css`
   .dropdown-content a:hover {
     color: #ffffff;
     background-color: #0b2b40;
+  }
+
+  // CART - SHOP
+  .cart-icon {
+    font-size: 25px;
+    color: #0b2b40;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.4s ease;
+    border: none;
+    background-color: transparent;
+  }
+  .cart-icon:hover {
+    transform: scale(1.1, 1.1);
+  }
+  .cart-item-qty {
+    position: absolute;
+    right: -8px;
+    font-size: 12px;
+    color: #eee;
+    background-color: #f02d34;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
   }
 
   @media (min-width: 650px) {

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useState, useEffect } from 'react'
@@ -6,15 +7,19 @@ import {
   // AiOutlineMinus,
   // AiOutlinePlus,
   AiFillStar,
+  AiOutlineMinus,
+  AiOutlinePlus,
   AiOutlineStar,
 } from 'react-icons/ai'
 
 import { client, urlFor } from '../utils/sanityClient'
+import { useStateContext } from '../utils/useStateContext'
 
 const Product = () => {
   const [product, setProduct] = useState([])
   const [index, setIndex] = useState(0)
   const { id } = useParams()
+  const { decQty, incQty, qty, onAdd } = useStateContext()
 
   useEffect(() => {
     getProduct()
@@ -77,20 +82,24 @@ const Product = () => {
         ) : (
           <p className="price">${product?.price}</p>
         )}
-        {/* <div className="quantity">
+        <div className="quantity">
           <h3>Quantity:</h3>
           <p className="quantity-desc">
-            <span className="minus">
+            <span className="minus" onClick={decQty}>
               <AiOutlineMinus />
             </span>
-            <span className="num">5</span>
-            <span className="plus">
+            <span className="num">{qty}</span>
+            <span className="plus" onClick={incQty}>
               <AiOutlinePlus />
             </span>
           </p>
-        </div> */}
+        </div>
         <div className="buttons">
-          <button type="button" className="add-to-cart">
+          <button
+            type="button"
+            className="add-to-cart"
+            onClick={() => onAdd(product, qty)}
+          >
             Add to Cart
           </button>
           {/* <button type="button" className="buy-now">

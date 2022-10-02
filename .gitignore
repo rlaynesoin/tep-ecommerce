@@ -89,3 +89,6 @@ apps/mido-web/build/*
 # ignore Hawk files
 packages/hawk/hawk_logs/*.log
 packages/hawk/hawk_logs/*.json
+
+# sanity
+tep-ecommerce/node_modules/*
