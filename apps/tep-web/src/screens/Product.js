@@ -122,6 +122,7 @@ const styles = css`
     border-radius: 15px;
     background-color: #ebebeb;
 
+    max-width: 400px;
     width: 400px;
     height: 400px;
     cursor: pointer;
@@ -266,6 +267,17 @@ const styles = css`
   @media screen and (max-width: 800px) {
     flex-wrap: wrap;
     margin: 20px;
+
+    .product-detail-image {
+      border-radius: 15px;
+      background-color: #ebebeb;
+
+      max-width: 400px;
+      width: 100%;
+      height: 300px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
 
     .product-detail-container .product-detail-image {
       width: 350px;

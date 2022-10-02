@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Grid } from '@mui/material'
 
-import { client, urlFor } from '../utils/sanityClient'
+import { urlFor } from '../utils/sanityClient'
+import getCustomBrands from '../utils/useBrands'
 
 const Brands = () => {
   const [brands, setbrands] = useState([])
@@ -15,8 +16,11 @@ const Brands = () => {
   }, [])
 
   const getBrands = async () => {
-    const query = `*[_type == "brands"]`
-    const result = await client.fetch(query)
+    const data = {
+      status: true,
+      asc: true,
+    }
+    const result = await getCustomBrands(data)
     setbrands(result)
   }
 

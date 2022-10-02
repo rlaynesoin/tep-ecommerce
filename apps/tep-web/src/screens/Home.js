@@ -2,24 +2,26 @@
 import { css } from '@emotion/react'
 import { useState, useEffect } from 'react'
 
-import { client } from '../utils/sanityClient'
-
 import FooterBanner from '../components/Home/FooterBanner'
 import Product from '../components/Home/Product'
 import DemoCarousel from '../components/Carousel'
+import { getCustomProducts } from '../utils/useProducts'
 
 const Home = () => {
   const [products, setProducts] = useState()
 
   useEffect(() => {
-    getServerSideProps()
+    getLastProduct()
   }, [])
 
-  const getServerSideProps = async () => {
-    const query = '*[_type == "product"]'
-    const xproducts = await client.fetch(query)
+  const getLastProduct = async () => {
+    const data = {
+      status: true,
+      desc: true,
+    }
+    const result = await getCustomProducts(data)
 
-    setProducts(xproducts)
+    setProducts(result)
   }
 
   return (

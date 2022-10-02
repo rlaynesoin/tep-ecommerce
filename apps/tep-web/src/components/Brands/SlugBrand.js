@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { client } from '../../utils/sanityClient'
+import { getCustomProducts, getProductsByBrand } from '../../utils/useProducts'
 
 import Product from '../Home/Product'
 
@@ -26,15 +27,20 @@ const SlugBrand = () => {
   }
 
   const getProductsOfter = async () => {
-    const query = `*[_type == "product" && ofter == true && references('${id}')]`
-    const result = await client.fetch(query)
+    const data = {
+      id: null,
+      status: true,
+      ofter: true,
+      type: null,
+      brand: id,
+      genre: null,
+    }
+    const result = await getCustomProducts(data)
     setProductsOfter(result)
   }
 
   const getProducts = async () => {
-    const query = `*[_type == "product" && references('${id}')] | order(_id) [0...12]`
-    const xproducts = await client.fetch(query)
-
+    const xproducts = await getProductsByBrand(id)
     setProducts(xproducts)
   }
 
@@ -65,10 +71,11 @@ const SlugBrand = () => {
         <h4>Ultimas productos</h4>
         <div className="products-container">
           {products.length > 0
-            ? products?.map(product => (
-                // eslint-disable-next-line no-underscore-dangle
-                <Product key={product._id} product={product} />
-              ))
+            ? products?.map(
+                (product, index) =>
+                  // eslint-disable-next-line no-underscore-dangle
+                  index < 4 && <Product key={product._id} product={product} />
+              )
             : emptyMsg}
         </div>
       </div>

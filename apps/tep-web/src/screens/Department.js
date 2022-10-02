@@ -6,7 +6,7 @@ import { Pagination } from '@mui/material'
 
 import Product from '../components/Home/Product'
 
-import { client } from '../utils/sanityClient'
+import { getCustomProducts, getTotalProducts } from '../utils/useProducts'
 
 const Department = () => {
   const [products, setProducts] = useState([])
@@ -14,22 +14,23 @@ const Department = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    getServerSideProps()
-    getTotalProducts()
+    getProducts()
+    totalProducts()
   }, [id])
 
-  const getServerSideProps = async () => {
-    const query = `*[_type == "product" && references('${id}')] | order(_id) [0...12]`
-    const xproducts = await client.fetch(query)
+  const getProducts = async () => {
+    const data = {
+      type: id,
+    }
+    const result = await getCustomProducts(data)
 
-    setProducts(xproducts)
+    setProducts(result)
   }
 
-  const getTotalProducts = async () => {
-    const query = `count(*[_type == "product" && references('${id}')])`
-    const xproducts = await client.fetch(query)
+  const totalProducts = async () => {
+    const result = await getTotalProducts(id)
 
-    setTotal(xproducts)
+    setTotal(result)
   }
 
   const totalPagination = Math.round(products.length / total)
