@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
@@ -7,6 +8,7 @@ import { client } from '../../utils/sanityClient'
 import { getCustomProducts, getProductsByBrand } from '../../utils/useProducts'
 
 import Product from '../Home/Product'
+import Spinner from '../Spinner/Spinner'
 
 const SlugBrand = () => {
   const [brand, setBrand] = useState([])
@@ -58,13 +60,18 @@ const SlugBrand = () => {
       <div className="div-container">
         <h4>Ofertas</h4>
         <div className="products-container">
-          {productsOfter.length > 0
-            ? productsOfter?.map(
-                (product, index) =>
-                  // eslint-disable-next-line no-underscore-dangle
-                  index < 4 && <Product key={product._id} product={product} />
-              )
-            : emptyMsg}
+          <>
+            {productsOfter &&
+              (productsOfter.length > 0
+                ? productsOfter?.map(
+                    (product, index) =>
+                      index < 4 && (
+                        <Product key={product._id} product={product} />
+                      )
+                  )
+                : emptyMsg)}
+            {!productsOfter && <Spinner />}
+          </>
         </div>
       </div>
       <div className="div-container">
@@ -77,6 +84,7 @@ const SlugBrand = () => {
                   index < 4 && <Product key={product._id} product={product} />
               )
             : emptyMsg}
+          {!products && <Spinner />}
         </div>
       </div>
       <div className="div-container">
@@ -88,6 +96,7 @@ const SlugBrand = () => {
                 <Product key={product._id} product={product} />
               ))
             : emptyMsg}
+          {!products && <Spinner />}
         </div>
       </div>
     </div>

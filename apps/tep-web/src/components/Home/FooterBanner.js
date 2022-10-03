@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { Grid } from '@mui/material'
 
 import { client, urlFor } from '../../utils/sanityClient'
+import Spinner from '../Spinner/Spinner'
 
 const FooterBanner = () => {
   const [types, setTypes] = useState([])
@@ -22,18 +23,22 @@ const FooterBanner = () => {
   return (
     <div css={styles}>
       <Grid container spacing={1}>
-        {types.map(typ => (
-          <Grid key={typ._id} item md={4} sm={6} xs={12}>
-            <Link key={typ._id} to={`department/${typ._id}`}>
-              <div className="department-div">
-                <div className="title-department">
-                  <h3>{typ.name}</h3>
+        {types ? (
+          types.map(typ => (
+            <Grid key={typ._id} item md={4} sm={6} xs={12}>
+              <Link key={typ._id} to={`department/${typ._id}`}>
+                <div className="department-div">
+                  <div className="title-department">
+                    <h3>{typ.name}</h3>
+                  </div>
+                  <img src={urlFor(typ?.image?.asset?._ref)} alt={typ.name} />
                 </div>
-                <img src={urlFor(typ?.image?.asset?._ref)} alt={typ.name} />
-              </div>
-            </Link>
-          </Grid>
-        ))}
+              </Link>
+            </Grid>
+          ))
+        ) : (
+          <Spinner size={100} />
+        )}
       </Grid>
     </div>
   )

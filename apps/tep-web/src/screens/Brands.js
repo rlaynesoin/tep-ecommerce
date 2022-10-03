@@ -7,6 +7,7 @@ import { Grid } from '@mui/material'
 
 import { urlFor } from '../utils/sanityClient'
 import getCustomBrands from '../utils/useBrands'
+import Spinner from '../components/Spinner/Spinner'
 
 const Brands = () => {
   const [brands, setbrands] = useState([])
@@ -32,26 +33,42 @@ const Brands = () => {
         que manejamos.{' '}
       </p>
       <Grid container spacing={3} style={{ marginTop: '30px' }}>
-        {brands.length > 0 &&
-          brands.map(brand => (
-            <Grid key={brand._id} item md={4} sm={6} xs={12}>
-              <Link to={`/brands/${brand._id}`}>
-                <button type="button" className="brand-div">
-                  <img
-                    src={urlFor(brand.image)}
-                    alt="img"
-                    className="img-button"
-                  />
-                </button>
-              </Link>
-            </Grid>
-          ))}
+        <>
+          {brands ? (
+            brands.length > 0 &&
+            brands.map(brand => (
+              <Grid key={brand._id} item md={4} sm={6} xs={12}>
+                <Link to={`/brands/${brand._id}`}>
+                  <button type="button" className="brand-div">
+                    <img
+                      src={urlFor(brand.image)}
+                      alt="img"
+                      className="img-button"
+                    />
+                  </button>
+                </Link>
+              </Grid>
+            ))
+          ) : (
+            <>
+              <Spinner size={250} />
+            </>
+          )}
+        </>
       </Grid>
     </div>
   )
 }
 
 const styles = css`
+  h2 {
+    color: #0b2b40;
+    font-size: 25px;
+  }
+  p {
+    font-size: 17px;
+    color: #0b2b40;
+  }
   .brand-div {
     background: #fff;
     border: none;
