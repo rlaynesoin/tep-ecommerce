@@ -38,7 +38,7 @@ const Product = () => {
 
   return (
     <div css={styles}>
-      {!product ? (
+      {product ? (
         <>
           <div>
             {product?.image && (
