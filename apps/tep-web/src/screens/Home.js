@@ -6,6 +6,7 @@ import FooterBanner from '../components/Home/FooterBanner'
 import Product from '../components/Home/Product'
 import DemoCarousel from '../components/Carousel'
 import { getCustomProducts } from '../utils/useProducts'
+import Spinner from '../components/Spinner/Spinner'
 
 const Home = () => {
   const [products, setProducts] = useState()
@@ -35,10 +36,14 @@ const Home = () => {
       </div>
 
       <div className="products-container">
-        {products?.map(
-          (product, index) =>
-            // eslint-disable-next-line no-underscore-dangle
-            index < 10 && <Product key={product._id} product={product} />
+        {products ? (
+          products?.map(
+            (product, index) =>
+              // eslint-disable-next-line no-underscore-dangle
+              index < 10 && <Product key={product._id} product={product} />
+          )
+        ) : (
+          <Spinner size={100} />
         )}
       </div>
 
@@ -69,7 +74,7 @@ const styles = css`
   .divCarousel {
     img {
       border-radius: 20px;
-      height: 400px;
+      height: 220px;
     }
   }
   .products-container {
@@ -79,6 +84,15 @@ const styles = css`
     gap: 15px;
     margin-top: 20px;
     width: 100%;
+  }
+
+  @media (min-width: 576px) {
+    .divCarousel {
+      img {
+        border-radius: 20px;
+        height: 400px;
+      }
+    }
   }
 `
 

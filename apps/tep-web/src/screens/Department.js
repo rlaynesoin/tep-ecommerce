@@ -7,6 +7,7 @@ import { Pagination } from '@mui/material'
 import Product from '../components/Home/Product'
 
 import { getCustomProducts, getTotalProducts } from '../utils/useProducts'
+import Spinner from '../components/Spinner/Spinner'
 
 const Department = () => {
   const [products, setProducts] = useState([])
@@ -44,10 +45,14 @@ const Department = () => {
         <p>{total} productos</p>
       </div>
       <div className="products-container">
-        {products?.map(product => (
-          // eslint-disable-next-line no-underscore-dangle
-          <Product key={product._id} product={product} />
-        ))}
+        {products ? (
+          products?.map(product => (
+            // eslint-disable-next-line no-underscore-dangle
+            <Product key={product._id} product={product} />
+          ))
+        ) : (
+          <Spinner size={350} />
+        )}
       </div>
       <div className="pagination">
         <Pagination count={totalPagination} size="large" />

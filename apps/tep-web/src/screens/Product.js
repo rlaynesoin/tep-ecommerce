@@ -12,8 +12,10 @@ import {
   AiOutlineStar,
 } from 'react-icons/ai'
 
-import { client, urlFor } from '../utils/sanityClient'
+import { urlFor } from '../utils/sanityClient'
 import { useStateContext } from '../utils/useStateContext'
+import { getCustomProducts } from '../utils/useProducts'
+import Spinner from '../components/Spinner/Spinner'
 
 const Product = () => {
   const [product, setProduct] = useState([])
@@ -26,87 +28,96 @@ const Product = () => {
   }, [id])
 
   const getProduct = async () => {
-    const query = `*[_type == "product" && status == true && _id == "${id}"]`
-    const result = await client.fetch(query)
+    const data = {
+      id,
+      status: true,
+    }
+    const result = await getCustomProducts(data)
     setProduct(result[0])
   }
 
   return (
     <div css={styles}>
-      <div>
-        {product?.image && (
-          <div className="image-container">
-            <img
-              src={urlFor(product?.image && product?.image[index])}
-              className="product-detail-image"
-              alt="img_product"
-            />
-          </div>
-        )}
-
-        <div className="small-images-container">
-          {product?.image?.map((item, i) => (
-            <img
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              src={urlFor(item)}
-              className={
-                i === index ? 'small-image selected-image' : 'small-image'
-              }
-              onMouseEnter={() => setIndex(i)}
-              alt="img"
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="product-detail-desc">
-        <h1>{product?.name}</h1>
-        <div className="reviews">
+      {!product ? (
+        <>
           <div>
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiFillStar />
-            <AiOutlineStar />
+            {product?.image && (
+              <div className="image-container">
+                <img
+                  src={urlFor(product?.image && product?.image[index])}
+                  className="product-detail-image"
+                  alt="img_product"
+                />
+              </div>
+            )}
+
+            <div className="small-images-container">
+              {product?.image?.map((item, i) => (
+                <img
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  src={urlFor(item)}
+                  className={
+                    i === index ? 'small-image selected-image' : 'small-image'
+                  }
+                  onMouseEnter={() => setIndex(i)}
+                  alt="img"
+                />
+              ))}
+            </div>
           </div>
-          <p>(20)</p>
-        </div>
-        <h4>Details: </h4>
-        <p>{product?.details}</p>
-        {product?.ofter ? (
-          <div className="div-ofter">
-            <p className="old-price">${product?.price}</p>
-            <p className="ofter-price">${product?.priceofter}</p>
-          </div>
-        ) : (
-          <p className="price">${product?.price}</p>
-        )}
-        <div className="quantity">
-          <h3>Quantity:</h3>
-          <p className="quantity-desc">
-            <span className="minus" onClick={decQty}>
-              <AiOutlineMinus />
-            </span>
-            <span className="num">{qty}</span>
-            <span className="plus" onClick={incQty}>
-              <AiOutlinePlus />
-            </span>
-          </p>
-        </div>
-        <div className="buttons">
-          <button
-            type="button"
-            className="add-to-cart"
-            onClick={() => onAdd(product, qty)}
-          >
-            Add to Cart
-          </button>
-          {/* <button type="button" className="buy-now">
+
+          <div className="product-detail-desc">
+            <h1>{product?.name}</h1>
+            <div className="reviews">
+              <div>
+                <AiFillStar />
+                <AiFillStar />
+                <AiFillStar />
+                <AiFillStar />
+                <AiOutlineStar />
+              </div>
+              <p>(20)</p>
+            </div>
+            <h4>Details: </h4>
+            <p>{product?.details}</p>
+            {product?.ofter ? (
+              <div className="div-ofter">
+                <p className="old-price">${product?.price}</p>
+                <p className="ofter-price">${product?.priceofter}</p>
+              </div>
+            ) : (
+              <p className="price">${product?.price}</p>
+            )}
+            <div className="quantity">
+              <h3>Quantity:</h3>
+              <p className="quantity-desc">
+                <span className="minus" onClick={decQty}>
+                  <AiOutlineMinus />
+                </span>
+                <span className="num">{qty}</span>
+                <span className="plus" onClick={incQty}>
+                  <AiOutlinePlus />
+                </span>
+              </p>
+            </div>
+            <div className="buttons">
+              <button
+                type="button"
+                className="add-to-cart"
+                onClick={() => onAdd(product, qty)}
+              >
+                Add to Cart
+              </button>
+              {/* <button type="button" className="buy-now">
             Buy Now
           </button> */}
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Spinner size={250} />
+      )}
     </div>
   )
 }
