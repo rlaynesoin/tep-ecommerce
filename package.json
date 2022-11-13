@@ -13,9 +13,12 @@
     "services/*"
   ],
   "devDependencies": {
+    "@babel/core": "^7.17.9",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@commitlint/config-lerna-scopes": "^17.0.2",
+    "@sanity/client": "^3.2.0",
+    "@sanity/image-url": "^1.0.1",
     "babel-eslint": "^10.1.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog-emoji": "^0.1.0",
@@ -42,7 +45,9 @@
     "format": "yarn run prettier -- --write",
     "prettier": "prettier \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|graphql|mdx)\"",
     "validate": "yarn run lint && yarn run prettier -- --list-different",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "test": "TZ=UTC razzle test --env=jsdom",
+    "test:ci": "CI=true yarn test"
   },
   "config": {
     "commitizen": {

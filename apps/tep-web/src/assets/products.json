@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "name": "Zapato",
+    "price": 12,
+    "image": "nike_mercurial.jpg"
+  },
+  {
+    "id": 1,
+    "name": "PS",
+    "price": 120,
+    "image": "PS5.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Chocolate",
+    "price": 6,
+    "image": "Ritter.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Bote",
+    "price": 16,
+    "image": "bote.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Lavadora",
+    "price": 261,
+    "image": "lavadora.jpg"
+  }
+]
