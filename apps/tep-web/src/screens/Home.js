@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 
 import FooterBanner from '../components/Home/FooterBanner'
 import Product from '../components/Home/Product'
-import DemoCarousel from '../components/Carousel'
 import { getCustomProducts } from '../utils/useProducts'
 import Spinner from '../components/Spinner/Spinner'
+import Carousel from '../components/Carousel/Caroulsel'
 
 const Home = () => {
   const [products, setProducts] = useState()
@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <div css={styles}>
       <div className="divCarousel">
-        <DemoCarousel autoPlay />
+        <Carousel />
       </div>
       <div className="products-heading">
         <h2>Nuevos articulos</h2>
@@ -72,10 +72,6 @@ const styles = css`
     font-weight: 200;
   }
   .divCarousel {
-    img {
-      border-radius: 20px;
-      height: 220px;
-    }
   }
   .products-container {
     display: flex;
@@ -88,10 +84,6 @@ const styles = css`
 
   @media (min-width: 576px) {
     .divCarousel {
-      img {
-        border-radius: 20px;
-        height: 400px;
-      }
     }
   }
 `

@@ -87,6 +87,7 @@ const styles = css`
     display: none;
     position: absolute;
     width: 300px;
+    padding: 5px;
     overflow: auto;
     background-color: #fff;
     box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
