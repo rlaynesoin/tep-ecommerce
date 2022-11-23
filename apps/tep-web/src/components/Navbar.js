@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="logo">
           <Link to="/">
             <img className="img-logo" src={TEP} alt="logo" />
-            <span>TEP</span>
+            <span className="tep-text">TEP</span>
           </Link>
           <Menu />
         </div>
@@ -102,6 +102,10 @@ const styles = css`
     width: 50px;
     height: 30px;
     margin-right: 10px;
+  }
+
+  .tep-text {
+    display: none;
   }
 
   /* NAVBAR MENU */
@@ -209,6 +213,9 @@ const styles = css`
     }
     .menu2 {
       display: flex;
+    }
+    .tep-text {
+      display: inline-block;
     }
   }
 `

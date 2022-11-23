@@ -5,7 +5,7 @@ export default {
   fields: [
     {
       name: 'image',
-      title: 'Image',
+      title: 'Imagen',
       type: 'image',
       options: {
         hotspot: true,
@@ -13,7 +13,7 @@ export default {
     },
     {
       name: 'name',
-      title: 'Name',
+      title: 'Nombre',
       type: 'string',
     },
   ],

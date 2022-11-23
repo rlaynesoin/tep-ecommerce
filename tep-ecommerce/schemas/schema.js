@@ -5,8 +5,9 @@ import product from './product'
 import banner from './banner'
 import brands from './brands'
 import types from './types'
+import contact from './contact'
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([product, banner, brands, types]),
+  types: schemaTypes.concat([product, banner, brands, types, contact]),
 })

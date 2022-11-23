@@ -1,11 +1,11 @@
 export default {
   name: 'product',
-  title: 'Product',
+  title: 'Producto',
   type: 'document',
   fields: [
     {
       name: 'image',
-      title: 'Image',
+      title: 'Imagen',
       type: 'array',
       of: [{ type: 'image' }],
       options: {
@@ -14,7 +14,7 @@ export default {
     },
     {
       name: 'name',
-      title: 'Name',
+      title: 'Nombre',
       type: 'string',
     },
     {
@@ -28,38 +28,46 @@ export default {
     },
     {
       name: 'price',
-      title: 'Price',
+      title: 'Precio',
       type: 'number',
     },
     {
+      name: 'priceSymbol',
+      title: 'Moneda',
+      type: 'string',
+      options: {
+        list: ['$', '₡'],
+      },
+    },
+    {
       name: 'details',
-      title: 'Details',
+      title: 'Detalle',
       type: 'string',
     },
     {
       name: 'ofter',
-      title: 'Ofter',
+      title: 'Oferta',
       type: 'boolean',
     },
     {
       name: 'priceofter',
-      title: 'Price ofter',
+      title: 'Precio oferta',
       type: 'number',
     },
     {
       name: 'status',
-      title: 'Status',
+      title: 'Estado',
       type: 'boolean',
     },
     {
       name: 'brand',
-      title: 'Brand',
+      title: 'Marca',
       type: 'reference',
       to: [{ type: 'brands' }],
     },
     {
       name: 'types',
-      title: 'Types',
+      title: 'Tipo',
       type: 'reference',
       to: [{ type: 'types' }],
     },

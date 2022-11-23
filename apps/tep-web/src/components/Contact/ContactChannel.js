@@ -6,26 +6,36 @@ import fb from '../../assets/icons/fb.svg'
 import mail from '../../assets/icons/mail.svg'
 import whatsapp from '../../assets/icons/whatsapp.svg'
 
-const ContactChannel = () => {
+const ContactChannel = ({ contact }) => {
+  const { detail, email, extension, nameFB, urlFB, phone, title } = contact
+
   return (
     <div css={styles}>
-      <h4>Nuestros canales de contacto</h4>
-      <p>
-        Acá te mostramos las diferentes formas en las que puedes contactarnos.
-      </p>
+      <h4>{title}</h4>
+      <p>{detail}</p>
       <div className="contact-div">
         <Grid container spacing={2}>
           <Grid item md={4} xs={12}>
             <div className="contact-information">
               <div>
-                <p>
-                  <img
-                    src={whatsapp}
-                    alt="Whatsapp-icon"
-                    className="whatsapp-icon"
-                  />
-                  (+506) 8888 - 8888
-                </p>
+                <Grid container spacing={2}>
+                  <Grid item xs={2}>
+                    <p>
+                      <img
+                        src={whatsapp}
+                        alt="Whatsapp-icon"
+                        className="whatsapp-icon"
+                      />
+                    </p>
+                  </Grid>
+                  <Grid item xs={10}>
+                    {phone?.map(p => (
+                      <p>
+                        (+{extension}) {p}
+                      </p>
+                    ))}
+                  </Grid>
+                </Grid>
               </div>
             </div>
           </Grid>
@@ -35,7 +45,7 @@ const ContactChannel = () => {
                 <p>
                   <img src={fb} alt="Facebook-icon" className="fb-icon" />
 
-                  <a href="https://google.com">TEP CR</a>
+                  <a href={urlFB}>{nameFB}</a>
                 </p>
               </div>
             </div>
@@ -45,7 +55,7 @@ const ContactChannel = () => {
               <div>
                 <p>
                   <img src={mail} alt="Mail-icon" className="mail-icon" />
-                  sales@tepcr.com
+                  {email}
                 </p>
               </div>
             </div>

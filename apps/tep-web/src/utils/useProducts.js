@@ -59,7 +59,7 @@ const getProductsByBrand = brand => {
 }
 
 const getTotalProducts = async id => {
-  const query = `count(*[_type == "product" && references('${id}')])`
+  const query = `count(*[_type == "product" && status == true && references('${id}')])`
   const result = await client.fetch(query)
 
   return result

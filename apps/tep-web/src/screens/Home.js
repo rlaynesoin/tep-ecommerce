@@ -6,7 +6,7 @@ import FooterBanner from '../components/Home/FooterBanner'
 import Product from '../components/Home/Product'
 import { getCustomProducts } from '../utils/useProducts'
 import Spinner from '../components/Spinner/Spinner'
-import Carousel from '../components/Carousel/Caroulsel'
+import Slider from '../components/Carousel/Caroulsel'
 
 const Home = () => {
   const [products, setProducts] = useState()
@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <div css={styles}>
       <div className="divCarousel">
-        <Carousel />
+        <Slider />
       </div>
       <div className="products-heading">
         <h2>Nuevos articulos</h2>
@@ -58,6 +58,8 @@ const Home = () => {
 }
 
 const styles = css`
+  overflow: none;
+
   .products-heading {
     text-align: center;
     margin: 40px 0px;
