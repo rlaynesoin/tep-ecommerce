@@ -1,11 +1,11 @@
 export default {
   name: 'brands',
-  title: 'Brands',
+  title: 'Marcas',
   type: 'document',
   fields: [
     {
       name: 'image',
-      title: 'Image',
+      title: 'Imagen',
       type: 'image',
       options: {
         hotspot: true,
@@ -13,17 +13,17 @@ export default {
     },
     {
       name: 'name',
-      title: 'Name',
+      title: 'Nombre',
       type: 'string',
     },
     {
       name: 'details',
-      title: 'Details',
+      title: 'Detalles',
       type: 'string',
     },
     {
       name: 'status',
-      title: 'Status',
+      title: 'Estado',
       type: 'boolean',
     },
   ],

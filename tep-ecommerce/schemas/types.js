@@ -1,26 +1,26 @@
 export default {
   name: 'types',
-  title: 'Types',
+  title: 'Tipos',
   type: 'document',
   fields: [
     {
       name: 'name',
-      title: 'Name',
+      title: 'Nombre',
       type: 'string',
     },
     {
       name: 'details',
-      title: 'Details',
+      title: 'Detalle',
       type: 'string',
     },
     {
       name: 'status',
-      title: 'Status',
+      title: 'Estado',
       type: 'boolean',
     },
     {
       name: 'image',
-      title: 'Image',
+      title: 'Imagen',
       type: 'image',
       options: {
         hotspot: true,
