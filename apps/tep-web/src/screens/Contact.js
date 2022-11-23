@@ -1,12 +1,27 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { Grid } from '@mui/material'
+import { useState, useEffect } from 'react'
+
+import { getContacts } from '../utils/useContact'
 
 import location from '../assets/icons/location.svg'
 import ContactChannel from '../components/Contact/ContactChannel'
 import Location from '../components/Contact/Location'
 
 const Contact = () => {
+  const [contact, setContact] = useState([])
+
+  useEffect(() => {
+    contacts()
+  }, [])
+
+  const contacts = async () => {
+    const data = await getContacts()
+    setContact(data[0])
+  }
+  const { address, state, district } = contact
+
   return (
     <div css={styles}>
       <h2>Contacto</h2>
@@ -34,14 +49,13 @@ const Contact = () => {
                   <div className="location-description">
                     <h4>¿Donde estamos ubicados?</h4>
                     <p>
-                      <span>&#8226;</span> Provincia: San José
+                      <span>&#8226;</span> Provincia: {state}
                     </p>
                     <p>
-                      <span>&#8226;</span> Canton: San Francisco de 2 Rios
+                      <span>&#8226;</span> Canton: {district}
                     </p>
                     <p>
-                      <span>&#8226;</span> Dirección: Del parque de la paz 300
-                      mts sur carretera a Desamparados.
+                      <span>&#8226;</span> Dirección: {address}.
                     </p>
                   </div>
                 </Grid>
@@ -50,7 +64,7 @@ const Contact = () => {
           </Grid>
         </Grid>
       </div>
-      <ContactChannel />
+      <ContactChannel contact={contact} />
     </div>
   )
 }

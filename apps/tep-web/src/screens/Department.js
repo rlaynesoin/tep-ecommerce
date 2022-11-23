@@ -22,6 +22,7 @@ const Department = () => {
   const getProducts = async () => {
     const data = {
       type: id,
+      status: true,
     }
     const result = await getCustomProducts(data)
 

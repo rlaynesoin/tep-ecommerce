@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 
 import DN from '../assets/img/DN.svg'
@@ -7,8 +8,19 @@ import moneyIcon from '../assets/icons/dollar-bag.svg'
 import teachIcon from '../assets/icons/teach.svg'
 import callCenterIcon from '../assets/icons/callcenter.svg'
 import ContactChannel from '../components/Contact/ContactChannel'
+import { getContacts } from '../utils/useContact'
 
 const Startup = () => {
+  const [contact, setContact] = useState([])
+
+  useEffect(() => {
+    contacts()
+  }, [])
+
+  const contacts = async () => {
+    const data = await getContacts()
+    setContact(data[0])
+  }
   return (
     <div css={styles}>
       <h2> Desarrollo de Negocios</h2>
@@ -61,7 +73,7 @@ const Startup = () => {
       </div>
 
       <div className="contac-channel">
-        <ContactChannel />
+        <ContactChannel contact={contact} />
       </div>
     </div>
   )

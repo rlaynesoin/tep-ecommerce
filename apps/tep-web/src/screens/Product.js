@@ -87,7 +87,10 @@ const Product = () => {
                 <p className="ofter-price">${product?.priceofter}</p>
               </div>
             ) : (
-              <p className="price">${product?.price}</p>
+              <p className="price">
+                {product?.priceSymbol}
+                {product?.price}
+              </p>
             )}
             <div className="quantity">
               <h3>Quantity:</h3>
@@ -147,6 +150,8 @@ const styles = css`
     display: flex;
     gap: 10px;
     margin-top: 20px;
+    width: 100%;
+    display: block;
   }
 
   .small-image {
